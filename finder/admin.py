@@ -1,0 +1,63 @@
+from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin as DjangoUserAdmin
+
+from .models import Interest, ProjectIdea, StaffProfile, User
+
+
+@admin.register(User)
+class UserAdmin(DjangoUserAdmin):
+    ordering = ("email",)
+    list_display = ("email", "first_name", "last_name", "is_active", "is_staff")
+    search_fields = ("email", "first_name", "last_name")
+    fieldsets = (
+        (None, {"fields": ("email", "password")}),
+        ("Personal information", {"fields": ("first_name", "last_name")}),
+        (
+            "Permissions",
+            {
+                "fields": (
+                    "is_active",
+                    "is_staff",
+                    "is_superuser",
+                    "groups",
+                    "user_permissions",
+                )
+            },
+        ),
+        ("Important dates", {"fields": ("last_login", "date_joined")}),
+    )
+    add_fieldsets = (
+        (
+            None,
+            {
+                "classes": ("wide",),
+                "fields": (
+                    "email",
+                    "first_name",
+                    "last_name",
+                    "password1",
+                    "password2",
+                ),
+            },
+        ),
+    )
+
+
+@admin.register(StaffProfile)
+class StaffProfileAdmin(admin.ModelAdmin):
+    list_display = ("user",)
+    search_fields = ("user__email", "user__first_name", "user__last_name")
+
+
+@admin.register(Interest)
+class InterestAdmin(admin.ModelAdmin):
+    list_display = ("name", "staff_profile")
+    list_filter = ("staff_profile",)
+    search_fields = ("name",)
+
+
+@admin.register(ProjectIdea)
+class ProjectIdeaAdmin(admin.ModelAdmin):
+    list_display = ("title", "staff_profile", "updated_at")
+    list_filter = ("staff_profile",)
+    search_fields = ("title", "description")
