@@ -57,6 +57,20 @@ demonstration. Django stores their passwords as salted hashes in SQLite.
 
 The project requires Python 3.12 or later.
 
+For a complete automated setup on Windows, run:
+
+```powershell
+.\scripts\setup.ps1
+```
+
+On macOS or Linux, run:
+
+```bash
+./scripts/setup.sh
+```
+
+The equivalent manual commands are shown below for transparency.
+
 ### Windows PowerShell
 
 ```powershell
@@ -87,6 +101,10 @@ Run the complete test suite:
 ```powershell
 .\.venv\Scripts\python.exe manage.py test
 ```
+
+Alternatively, run `.\scripts\verify.ps1` on Windows or
+`./scripts/verify.sh` on macOS/Linux to perform the Django system check,
+migration-drift check, complete test suite and 95% minimum coverage check.
 
 Run the tests with coverage:
 
