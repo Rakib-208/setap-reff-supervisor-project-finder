@@ -1,0 +1,80 @@
+{% extends "finder/base.html" %}
+
+{% block title %}Staff dashboard | ProjectFinder{% endblock %}
+
+{% block content %}
+<section class="page-hero page-hero-staff">
+    <div class="shell hero-grid">
+        <div>
+            <p class="eyebrow">Staff workspace</p>
+            <h1>Keep your supervision profile current.</h1>
+            <p class="lead">
+                Review the interests and project ideas attached to your fictional
+                demonstration profile.
+            </p>
+        </div>
+        <span class="avatar avatar-large" aria-hidden="true">{{ profile.initials }}</span>
+    </div>
+</section>
+
+<div class="shell dashboard-grid">
+    <section class="content-card dashboard-profile" aria-labelledby="staff-profile-heading">
+        <p class="eyebrow">Your profile</p>
+        <h2 id="staff-profile-heading">{{ profile.display_name }}</h2>
+        <p class="profile-email">{{ profile.user.email }}</p>
+        <p>{{ profile.biography }}</p>
+    </section>
+
+    <section class="metric-row" aria-label="Profile content totals">
+        <div class="metric-card">
+            <strong>{{ profile.interests.count|stringformat:"02d" }}</strong>
+            <span>areas of interest</span>
+        </div>
+        <div class="metric-card metric-card-accent">
+            <strong>{{ profile.project_ideas.count|stringformat:"02d" }}</strong>
+            <span>project ideas</span>
+        </div>
+    </section>
+
+    <section class="content-card" aria-labelledby="dashboard-interests">
+        <div class="section-heading">
+            <div>
+                <p class="eyebrow">Expertise</p>
+                <h2 id="dashboard-interests">Areas of interest</h2>
+            </div>
+        </div>
+        <div class="interest-list interest-list-large">
+            {% for interest in profile.interests.all %}
+                <span class="interest-chip">{{ interest.name }}</span>
+            {% empty %}
+                <p class="muted">No interests have been added.</p>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section aria-labelledby="dashboard-projects">
+        <div class="section-heading">
+            <div>
+                <p class="eyebrow">Opportunities</p>
+                <h2 id="dashboard-projects">Project ideas</h2>
+            </div>
+        </div>
+        <div class="project-stack">
+            {% for project in profile.project_ideas.all %}
+                <article class="project-card">
+                    <span class="project-number" aria-hidden="true">{{ forloop.counter|stringformat:"02d" }}</span>
+                    <div>
+                        <h3>{{ project.title }}</h3>
+                        <p>{{ project.description }}</p>
+                    </div>
+                </article>
+            {% empty %}
+                <div class="empty-state empty-state-compact">
+                    <h3>No project ideas yet</h3>
+                    <p>Add a project idea to make it visible to students.</p>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+</div>
+{% endblock %}

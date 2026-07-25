@@ -1,0 +1,83 @@
+{% extends "finder/base.html" %}
+
+{% block title %}Sign in | ProjectFinder{% endblock %}
+{% block body_class %}login-page{% endblock %}
+{% block footer %}{% endblock %}
+
+{% block content %}
+<div class="login-layout">
+    <section class="login-introduction" aria-labelledby="welcome-title">
+        <div class="login-brand">
+            <span class="brand-mark brand-mark-large" aria-hidden="true">PF</span>
+            <span>ProjectFinder</span>
+        </div>
+        <div class="login-copy">
+            <p class="eyebrow">Final-year project discovery</p>
+            <h1 id="welcome-title">Find the right project.<br>Meet the right supervisor.</h1>
+            <p class="lead">
+                Explore fictional academic profiles, compare specialist interests
+                and discover project ideas in one focused place.
+            </p>
+        </div>
+        <ul class="feature-list" aria-label="Prototype features">
+            <li><span aria-hidden="true">01</span> Search by supervisor name</li>
+            <li><span aria-hidden="true">02</span> Filter by specialist interest</li>
+            <li><span aria-hidden="true">03</span> Review detailed project ideas</li>
+        </ul>
+        <p class="fiction-note">
+            Academic demonstration only. Every person and project shown is fictional.
+        </p>
+    </section>
+
+    <section class="login-panel" aria-labelledby="login-title">
+        <div class="login-card">
+            <p class="eyebrow">Welcome back</p>
+            <h2 id="login-title">Sign in to continue</h2>
+            <p class="muted">Use one of the seeded demonstration accounts below.</p>
+
+            <form class="stacked-form" method="post" novalidate>
+                {% csrf_token %}
+                {% if form.non_field_errors %}
+                    <div class="form-alert" role="alert">
+                        {% for error in form.non_field_errors %}<p>{{ error }}</p>{% endfor %}
+                    </div>
+                {% endif %}
+
+                <div class="field-group">
+                    <label for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
+                    {{ form.username }}
+                    {% for error in form.username.errors %}
+                        <p class="field-error" id="{{ form.username.id_for_label }}-error">{{ error }}</p>
+                    {% endfor %}
+                </div>
+
+                <div class="field-group">
+                    <label for="{{ form.password.id_for_label }}">{{ form.password.label }}</label>
+                    {{ form.password }}
+                    {% for error in form.password.errors %}
+                        <p class="field-error" id="{{ form.password.id_for_label }}-error">{{ error }}</p>
+                    {% endfor %}
+                </div>
+
+                <button class="button button-primary button-full" type="submit">
+                    Sign in <span aria-hidden="true">→</span>
+                </button>
+            </form>
+
+            <div class="demo-accounts">
+                <h3>Demonstration accounts</h3>
+                <div class="demo-account">
+                    <span class="demo-role">Student</span>
+                    <code>student@example.test</code>
+                    <code>Student1234.</code>
+                </div>
+                <div class="demo-account">
+                    <span class="demo-role">Staff</span>
+                    <code>staff@example.test</code>
+                    <code>Staff1234.</code>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

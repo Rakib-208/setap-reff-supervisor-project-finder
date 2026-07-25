@@ -1,0 +1,114 @@
+{% extends "finder/base.html" %}
+
+{% block title %}Find a supervisor | ProjectFinder{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+    <div class="shell hero-grid">
+        <div>
+            <p class="eyebrow">Student directory</p>
+            <h1>Find a supervisor who fits your direction.</h1>
+            <p class="lead">
+                Search fictional staff profiles and explore the expertise and project
+                ideas available for your final-year project.
+            </p>
+        </div>
+        <div class="hero-stat" aria-label="{{ result_count }} matching staff profiles">
+            <strong>{{ result_count|stringformat:"02d" }}</strong>
+            <span>matching profile{{ result_count|pluralize }}</span>
+        </div>
+    </div>
+</section>
+
+<section class="shell directory-section" aria-labelledby="directory-title">
+    <div class="filter-card">
+        <div class="section-heading">
+            <div>
+                <p class="eyebrow">Narrow your search</p>
+                <h2 id="directory-title">Academic staff</h2>
+            </div>
+            {% if search_query or selected_interest %}
+                <a class="clear-link" href="{% url 'finder:staff-directory' %}">Clear all filters</a>
+            {% endif %}
+        </div>
+
+        <form class="filter-form" method="get" role="search">
+            <div class="field-group">
+                <label for="staff-search">Search by name</label>
+                <input id="staff-search" name="q" type="search" maxlength="100"
+                       value="{{ search_query }}" placeholder="e.g. Maya Patel">
+            </div>
+            <div class="field-group">
+                <label for="interest-filter">Area of interest</label>
+                <select id="interest-filter" name="interest" {% if filter_error %}aria-describedby="interest-error"{% endif %}>
+                    <option value="">All areas</option>
+                    {% for interest in interest_options %}
+                        <option value="{{ interest }}" {% if interest == selected_interest %}selected{% endif %}>
+                            {{ interest }}
+                        </option>
+                    {% endfor %}
+                </select>
+                {% if filter_error %}
+                    <p class="field-error" id="interest-error">{{ filter_error }}</p>
+                {% endif %}
+            </div>
+            <button class="button button-primary filter-button" type="submit">
+                Search profiles
+            </button>
+        </form>
+    </div>
+
+    {% if profiles %}
+        <div class="results-summary" aria-live="polite">
+            <p>
+                Showing <strong>{{ result_count }}</strong>
+                profile{{ result_count|pluralize }}
+                {% if search_query %} matching “{{ search_query }}”{% endif %}
+                {% if selected_interest %} in {{ selected_interest }}{% endif %}.
+            </p>
+        </div>
+
+        <div class="profile-grid">
+            {% for profile in profiles %}
+                <article class="profile-card">
+                    <div class="profile-card-top">
+                        <span class="avatar" aria-hidden="true">{{ profile.initials }}</span>
+                        <div>
+                            <p class="card-kicker">Academic supervisor</p>
+                            <h2>{{ profile.display_name }}</h2>
+                            <p class="profile-email">{{ profile.user.email }}</p>
+                        </div>
+                    </div>
+
+                    <p class="profile-summary">{{ profile.biography|truncatewords:24 }}</p>
+
+                    <div class="interest-list" aria-label="Areas of interest">
+                        {% for interest in profile.interests.all|slice:":3" %}
+                            <span class="interest-chip">{{ interest.name }}</span>
+                        {% empty %}
+                            <span class="muted">No interests listed</span>
+                        {% endfor %}
+                    </div>
+
+                    <div class="profile-card-footer">
+                        <span>{{ profile.project_count }} project idea{{ profile.project_count|pluralize }}</span>
+                        <a class="arrow-link"
+                           href="{% url 'finder:staff-profile' profile.pk %}?q={{ search_query|urlencode }}&amp;interest={{ selected_interest|urlencode }}">
+                            View profile <span aria-hidden="true">→</span>
+                        </a>
+                    </div>
+                </article>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="empty-state">
+            <span class="empty-mark" aria-hidden="true">?</span>
+            <h2>No matching supervisors</h2>
+            <p>Try a shorter name, choose a different interest, or clear the filters.</p>
+            <a class="button button-secondary" href="{% url 'finder:staff-directory' %}">
+                Show all staff
+            </a>
+        </div>
+    {% endif %}
+</section>
+{% endblock %}
