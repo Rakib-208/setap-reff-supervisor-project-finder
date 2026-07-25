@@ -154,6 +154,7 @@ docs/                       Demo, testing, traceability and AI-use evidence
 
 ## Documentation
 
+- `CHANGELOG.md` - versioned record of delivered functionality.
 - `docs/DEMO_SCRIPT.md` - a timed 3-5 minute assessment demonstration.
 - `docs/ARCHITECTURE.md` - implementation layers, request flows and decisions.
 - `docs/MAINTENANCE.md` - repeatable operation, changes and troubleshooting.
@@ -161,6 +162,13 @@ docs/                       Demo, testing, traceability and AI-use evidence
 - `docs/TEST_SUMMARY.md` - test strategy, partitions and verified result.
 - `docs/AI_USE.md` - transparent acknowledgement of AI assistance.
 - `SECURITY.md` - prototype security boundary and reporting notes.
+- `docs/wiki/` - version-controlled source for the GitHub Wiki pages.
+
+## Release
+
+The completed assessment prototype is versioned as **1.0.0**. The release is
+reproducible from migrations plus the `seed_demo` command; the local SQLite
+database is intentionally excluded.
 
 ## Scope
 
