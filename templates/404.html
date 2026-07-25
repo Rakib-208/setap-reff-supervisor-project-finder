@@ -1,0 +1,15 @@
+{% extends "finder/base.html" %}
+
+{% block title %}Page not found | ProjectFinder{% endblock %}
+
+{% block content %}
+<section class="shell narrow-page">
+    <div class="empty-state">
+        <span class="empty-mark" aria-hidden="true">?</span>
+        <p class="eyebrow">Page not found</p>
+        <h1>We could not find that page.</h1>
+        <p>The address may be incorrect, or the record may no longer be available.</p>
+        <a class="button button-primary" href="{% url 'finder:home' %}">Return to ProjectFinder</a>
+    </div>
+</section>
+{% endblock %}
