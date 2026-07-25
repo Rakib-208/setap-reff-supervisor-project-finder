@@ -2,15 +2,17 @@ from urllib.parse import urlencode
 
 from django.contrib import messages
 from django.contrib.auth import login, logout
+from django.db import transaction
 from django.db.models import Count, Q, Value
 from django.db.models.functions import Concat
 from django.http import HttpResponseNotAllowed
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
+from django.views.decorators.http import require_http_methods
 
 from .access import STAFF_ROLE, STUDENT_ROLE, has_role, role_for, role_required
-from .forms import EmailAuthenticationForm
-from .models import Interest, StaffProfile
+from .forms import EmailAuthenticationForm, InterestForm, ProjectIdeaForm
+from .models import Interest, ProjectIdea, StaffProfile
 
 
 def _role_destination(user):
@@ -162,3 +164,194 @@ def dashboard(request):
         user=request.user,
     )
     return render(request, "finder/dashboard.html", {"profile": profile})
+
+
+def _owned_staff_profile(request):
+    return get_object_or_404(
+        StaffProfile.objects.select_related("user"),
+        user=request.user,
+    )
+
+
+@role_required(STAFF_ROLE)
+@require_http_methods(["GET", "POST"])
+def interest_create(request):
+    profile = _owned_staff_profile(request)
+    form = InterestForm(
+        request.POST or None,
+        staff_profile=profile,
+    )
+    if request.method == "POST" and form.is_valid():
+        with transaction.atomic():
+            interest = form.save()
+        messages.success(request, f"Added “{interest.name}” to your interests.")
+        return redirect("finder:dashboard")
+    return render(
+        request,
+        "finder/content_form.html",
+        {
+            "form": form,
+            "eyebrow": "Profile expertise",
+            "page_title": "Add an area of interest",
+            "introduction": (
+                "Add a concise subject area that helps students understand the "
+                "projects you are prepared to supervise."
+            ),
+            "submit_label": "Add interest",
+        },
+    )
+
+
+@role_required(STAFF_ROLE)
+@require_http_methods(["GET", "POST"])
+def interest_update(request, interest_id):
+    profile = _owned_staff_profile(request)
+    interest = get_object_or_404(
+        Interest,
+        pk=interest_id,
+        staff_profile=profile,
+    )
+    form = InterestForm(
+        request.POST or None,
+        instance=interest,
+        staff_profile=profile,
+    )
+    if request.method == "POST" and form.is_valid():
+        with transaction.atomic():
+            updated_interest = form.save()
+        messages.success(
+            request,
+            f"Updated your interest to “{updated_interest.name}”.",
+        )
+        return redirect("finder:dashboard")
+    return render(
+        request,
+        "finder/content_form.html",
+        {
+            "form": form,
+            "eyebrow": "Profile expertise",
+            "page_title": "Edit area of interest",
+            "introduction": (
+                "Update this subject area. The change will be visible on your "
+                "student-facing profile."
+            ),
+            "submit_label": "Save changes",
+        },
+    )
+
+
+@role_required(STAFF_ROLE)
+@require_http_methods(["GET", "POST"])
+def interest_delete(request, interest_id):
+    profile = _owned_staff_profile(request)
+    interest = get_object_or_404(
+        Interest,
+        pk=interest_id,
+        staff_profile=profile,
+    )
+    if request.method == "POST":
+        name = interest.name
+        with transaction.atomic():
+            interest.delete()
+        messages.success(request, f"Deleted the interest “{name}”.")
+        return redirect("finder:dashboard")
+    return render(
+        request,
+        "finder/confirm_delete.html",
+        {
+            "object_name": interest.name,
+            "object_type": "area of interest",
+        },
+    )
+
+
+@role_required(STAFF_ROLE)
+@require_http_methods(["GET", "POST"])
+def project_create(request):
+    profile = _owned_staff_profile(request)
+    form = ProjectIdeaForm(
+        request.POST or None,
+        staff_profile=profile,
+    )
+    if request.method == "POST" and form.is_valid():
+        with transaction.atomic():
+            project = form.save()
+        messages.success(request, f"Added the project idea “{project.title}”.")
+        return redirect("finder:dashboard")
+    return render(
+        request,
+        "finder/content_form.html",
+        {
+            "form": form,
+            "eyebrow": "Project opportunities",
+            "page_title": "Add a project idea",
+            "introduction": (
+                "Describe a focused project direction that a student can understand "
+                "and discuss with you."
+            ),
+            "submit_label": "Add project idea",
+        },
+    )
+
+
+@role_required(STAFF_ROLE)
+@require_http_methods(["GET", "POST"])
+def project_update(request, project_id):
+    profile = _owned_staff_profile(request)
+    project = get_object_or_404(
+        ProjectIdea,
+        pk=project_id,
+        staff_profile=profile,
+    )
+    form = ProjectIdeaForm(
+        request.POST or None,
+        instance=project,
+        staff_profile=profile,
+    )
+    if request.method == "POST" and form.is_valid():
+        with transaction.atomic():
+            updated_project = form.save()
+        messages.success(
+            request,
+            f"Updated the project idea “{updated_project.title}”.",
+        )
+        return redirect("finder:dashboard")
+    return render(
+        request,
+        "finder/content_form.html",
+        {
+            "form": form,
+            "eyebrow": "Project opportunities",
+            "page_title": "Edit project idea",
+            "introduction": (
+                "Update the title or description. Saved changes will appear on "
+                "your student-facing profile."
+            ),
+            "submit_label": "Save changes",
+        },
+    )
+
+
+@role_required(STAFF_ROLE)
+@require_http_methods(["GET", "POST"])
+def project_delete(request, project_id):
+    profile = _owned_staff_profile(request)
+    project = get_object_or_404(
+        ProjectIdea,
+        pk=project_id,
+        staff_profile=profile,
+    )
+    if request.method == "POST":
+        title = project.title
+        with transaction.atomic():
+            project.delete()
+        messages.success(request, f"Deleted the project idea “{title}”.")
+        return redirect("finder:dashboard")
+    return render(
+        request,
+        "finder/confirm_delete.html",
+        {
+            "object_name": project.title,
+            "object_type": "project idea",
+        },
+    )

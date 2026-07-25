@@ -42,12 +42,24 @@
                 <p class="eyebrow">Expertise</p>
                 <h2 id="dashboard-interests">Areas of interest</h2>
             </div>
+            <a class="button button-small button-secondary" href="{% url 'finder:interest-create' %}">
+                <span aria-hidden="true">+</span> Add interest
+            </a>
         </div>
-        <div class="interest-list interest-list-large">
+        <div class="management-list">
             {% for interest in profile.interests.all %}
-                <span class="interest-chip">{{ interest.name }}</span>
+                <article class="management-row">
+                    <span class="interest-chip">{{ interest.name }}</span>
+                    <div class="row-actions" aria-label="Actions for {{ interest.name }}">
+                        <a href="{% url 'finder:interest-update' interest.pk %}">Edit</a>
+                        <a class="danger-link" href="{% url 'finder:interest-delete' interest.pk %}">Delete</a>
+                    </div>
+                </article>
             {% empty %}
-                <p class="muted">No interests have been added.</p>
+                <div class="inline-empty">
+                    <p>No interests have been added yet.</p>
+                    <a href="{% url 'finder:interest-create' %}">Add the first interest</a>
+                </div>
             {% endfor %}
         </div>
     </section>
@@ -58,6 +70,9 @@
                 <p class="eyebrow">Opportunities</p>
                 <h2 id="dashboard-projects">Project ideas</h2>
             </div>
+            <a class="button button-small button-primary" href="{% url 'finder:project-create' %}">
+                <span aria-hidden="true">+</span> Add project
+            </a>
         </div>
         <div class="project-stack">
             {% for project in profile.project_ideas.all %}
@@ -66,12 +81,17 @@
                     <div>
                         <h3>{{ project.title }}</h3>
                         <p>{{ project.description }}</p>
+                        <div class="row-actions project-actions" aria-label="Actions for {{ project.title }}">
+                            <a href="{% url 'finder:project-update' project.pk %}">Edit project</a>
+                            <a class="danger-link" href="{% url 'finder:project-delete' project.pk %}">Delete</a>
+                        </div>
                     </div>
                 </article>
             {% empty %}
                 <div class="empty-state empty-state-compact">
                     <h3>No project ideas yet</h3>
                     <p>Add a project idea to make it visible to students.</p>
+                    <a class="button button-primary" href="{% url 'finder:project-create' %}">Add project idea</a>
                 </div>
             {% endfor %}
         </div>
