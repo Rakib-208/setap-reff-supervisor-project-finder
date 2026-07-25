@@ -1,5 +1,7 @@
 # ProjectFinder
 
+[![Django verification](https://github.com/Rakib-208/setap-reff-supervisor-project-finder/actions/workflows/ci.yml/badge.svg)](https://github.com/Rakib-208/setap-reff-supervisor-project-finder/actions/workflows/ci.yml)
+
 ProjectFinder is a Django prototype for final-year project discovery. Students
 can search fictional academic profiles, filter by specialist interest and
 review proposed projects. Staff can securely maintain only the interests and
