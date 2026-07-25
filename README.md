@@ -155,6 +155,7 @@ docs/                       Demo, testing, traceability and AI-use evidence
 ## Documentation
 
 - `docs/DEMO_SCRIPT.md` - a timed 3-5 minute assessment demonstration.
+- `docs/ARCHITECTURE.md` - implementation layers, request flows and decisions.
 - `docs/REQUIREMENTS_TRACEABILITY.md` - requirements mapped to code and tests.
 - `docs/TEST_SUMMARY.md` - test strategy, partitions and verified result.
 - `docs/AI_USE.md` - transparent acknowledgement of AI assistance.
