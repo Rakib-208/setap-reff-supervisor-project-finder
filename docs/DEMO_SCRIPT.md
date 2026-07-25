@@ -45,11 +45,11 @@ Show the login page and point out the clearly published demonstration accounts.
 
 Open the public GitHub repository and briefly show:
 
-- the small commit history and merged feature branches/pull requests;
-- the four tracked implementation issues;
+- the focused commit history and merged feature branches/pull requests;
+- the seven tracked implementation and quality issues;
 - the separated `models.py`, `views.py`, `forms.py` and templates;
 - the automated test folders;
-- the README test result: 52 passing tests and 97% coverage.
+- the README test result: 59 passing tests and 97% coverage.
 
 Finish by restating that the prototype implements student discovery, protected
 staff maintenance, validation, ownership and persistence.
