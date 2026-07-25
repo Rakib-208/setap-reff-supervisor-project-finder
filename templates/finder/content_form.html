@@ -1,0 +1,48 @@
+{% extends "finder/base.html" %}
+
+{% block title %}{{ page_title }} | ProjectFinder{% endblock %}
+
+{% block content %}
+<section class="form-page">
+    <div class="shell form-shell">
+        <a class="back-link back-link-dark" href="{% url 'finder:dashboard' %}">
+            <span aria-hidden="true">←</span> Back to dashboard
+        </a>
+
+        <div class="form-card">
+            <div class="form-card-heading">
+                <p class="eyebrow">{{ eyebrow }}</p>
+                <h1>{{ page_title }}</h1>
+                <p>{{ introduction }}</p>
+            </div>
+
+            <form class="stacked-form" method="post" novalidate>
+                {% csrf_token %}
+                {% if form.non_field_errors %}
+                    <div class="form-alert" role="alert">
+                        {% for error in form.non_field_errors %}<p>{{ error }}</p>{% endfor %}
+                    </div>
+                {% endif %}
+
+                {% for field in form %}
+                    <div class="field-group">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.help_text %}
+                            <p class="help-text" id="{{ field.id_for_label }}-help">{{ field.help_text }}</p>
+                        {% endif %}
+                        {% for error in field.errors %}
+                            <p class="field-error" id="{{ field.id_for_label }}-error">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+
+                <div class="form-actions">
+                    <button class="button button-primary" type="submit">{{ submit_label }}</button>
+                    <a class="button button-secondary" href="{% url 'finder:dashboard' %}">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}

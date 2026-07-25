@@ -1,0 +1,31 @@
+{% extends "finder/base.html" %}
+
+{% block title %}Confirm deletion | ProjectFinder{% endblock %}
+
+{% block content %}
+<section class="form-page">
+    <div class="shell form-shell">
+        <a class="back-link back-link-dark" href="{% url 'finder:dashboard' %}">
+            <span aria-hidden="true">←</span> Back to dashboard
+        </a>
+
+        <div class="form-card confirmation-card">
+            <span class="warning-mark" aria-hidden="true">!</span>
+            <p class="eyebrow">Confirmation required</p>
+            <h1>Delete this {{ object_type }}?</h1>
+            <p>
+                You are about to permanently remove
+                <strong>“{{ object_name }}”</strong> from your profile.
+                Students will no longer be able to see it.
+            </p>
+            <p class="warning-copy">This action cannot be undone.</p>
+
+            <form class="form-actions" method="post">
+                {% csrf_token %}
+                <button class="button button-danger" type="submit">Yes, delete it</button>
+                <a class="button button-secondary" href="{% url 'finder:dashboard' %}">Keep it</a>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}
