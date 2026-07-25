@@ -41,13 +41,14 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / "templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'finder.context_processors.user_role',
             ],
         },
     },
@@ -80,6 +81,8 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 AUTH_USER_MODEL = "finder.User"
+LOGIN_URL = "finder:login"
+LOGIN_REDIRECT_URL = "finder:home"
 
 LANGUAGE_CODE = "en-gb"
 TIME_ZONE = "Europe/London"

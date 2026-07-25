@@ -1,0 +1,17 @@
+{% extends "finder/base.html" %}
+
+{% block title %}Account role unavailable | ProjectFinder{% endblock %}
+
+{% block content %}
+<section class="shell narrow-page">
+    <div class="empty-state">
+        <span class="empty-mark" aria-hidden="true">!</span>
+        <h1>Account role unavailable</h1>
+        <p>This account is not assigned to the Student or Staff demonstration role.</p>
+        <form method="post" action="{% url 'finder:logout' %}">
+            {% csrf_token %}
+            <button class="button button-primary" type="submit">Return to sign in</button>
+        </form>
+    </div>
+</section>
+{% endblock %}

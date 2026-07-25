@@ -1,0 +1,72 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Find final-year project ideas and potential academic supervisors.">
+    <title>{% block title %}ProjectFinder{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'finder/css/styles.css' %}">
+</head>
+<body class="{% block body_class %}{% endblock %}">
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    {% if request.user.is_authenticated %}
+        <header class="site-header">
+            <div class="shell header-inner">
+                <a class="brand" href="{% url 'finder:home' %}" aria-label="ProjectFinder home">
+                    <span class="brand-mark" aria-hidden="true">PF</span>
+                    <span>
+                        <strong>ProjectFinder</strong>
+                        <small>Supervisor discovery</small>
+                    </span>
+                </a>
+
+                <nav class="primary-nav" aria-label="Primary navigation">
+                    {% if current_role == "Student" %}
+                        <a class="{% if request.resolver_match.url_name == 'staff-directory' %}is-active{% endif %}"
+                           href="{% url 'finder:staff-directory' %}">Find a supervisor</a>
+                    {% elif current_role == "Staff" %}
+                        <a class="{% if request.resolver_match.url_name == 'dashboard' %}is-active{% endif %}"
+                           href="{% url 'finder:dashboard' %}">My dashboard</a>
+                    {% endif %}
+                </nav>
+
+                <div class="account-menu">
+                    <span class="role-badge">{{ current_role }}</span>
+                    <span class="account-name">{{ request.user.display_name }}</span>
+                    <form method="post" action="{% url 'finder:logout' %}">
+                        {% csrf_token %}
+                        <button class="text-button" type="submit">Sign out</button>
+                    </form>
+                </div>
+            </div>
+        </header>
+    {% endif %}
+
+    {% if messages %}
+        <div class="shell message-stack" aria-live="polite">
+            {% for message in messages %}
+                <div class="message message-{{ message.tags|default:'info' }}" role="status">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <main id="main-content" tabindex="-1">
+        {% block content %}{% endblock %}
+    </main>
+
+    {% block footer %}
+        {% if request.user.is_authenticated %}
+            <footer class="site-footer">
+                <div class="shell footer-inner">
+                    <p>ProjectFinder academic prototype</p>
+                    <p>All displayed people, accounts and project ideas are fictional.</p>
+                </div>
+            </footer>
+        {% endif %}
+    {% endblock %}
+</body>
+</html>
