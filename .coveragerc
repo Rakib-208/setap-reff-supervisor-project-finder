@@ -1,0 +1,11 @@
+[run]
+source = finder
+branch = True
+
+[report]
+show_missing = True
+skip_covered = False
+omit =
+    finder/admin.py
+    finder/migrations/*
+    finder/tests/*
