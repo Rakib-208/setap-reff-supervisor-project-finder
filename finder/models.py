@@ -43,6 +43,12 @@ class User(AbstractUser):
 
     class Meta:
         ordering = ("first_name", "last_name", "email")
+        indexes = [
+            models.Index(
+                fields=("first_name", "last_name", "email"),
+                name="user_display_order_idx",
+            )
+        ]
 
     @property
     def display_name(self):
@@ -95,6 +101,12 @@ class Interest(models.Model):
 
     class Meta:
         ordering = ("name",)
+        indexes = [
+            models.Index(
+                fields=("staff_profile", "name"),
+                name="interest_owner_name_idx",
+            )
+        ]
         constraints = [
             models.UniqueConstraint(
                 Lower("name"),
@@ -127,6 +139,12 @@ class ProjectIdea(models.Model):
 
     class Meta:
         ordering = ("title",)
+        indexes = [
+            models.Index(
+                fields=("staff_profile", "title"),
+                name="project_owner_title_idx",
+            )
+        ]
 
     def clean(self):
         self.title = self.title.strip()
