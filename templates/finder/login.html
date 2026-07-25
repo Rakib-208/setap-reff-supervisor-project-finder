@@ -33,12 +33,12 @@
         <div class="login-card">
             <p class="eyebrow">Welcome back</p>
             <h2 id="login-title">Sign in to continue</h2>
-            <p class="muted">Use one of the seeded demonstration accounts below.</p>
+            <p class="muted" id="login-help">Use one of the seeded demonstration accounts below.</p>
 
             <form class="stacked-form" method="post" novalidate>
                 {% csrf_token %}
                 {% if form.non_field_errors %}
-                    <div class="form-alert" role="alert">
+                    <div class="form-alert" id="login-form-error" role="alert">
                         {% for error in form.non_field_errors %}<p>{{ error }}</p>{% endfor %}
                     </div>
                 {% endif %}

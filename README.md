@@ -41,7 +41,7 @@ fictional demonstration data.
 - Atomic create, update and delete operations.
 - Responsive layouts from small mobile to desktop widths.
 - Keyboard focus styles, semantic headings, labels and skip navigation.
-- 58 automated tests with 97% statement/branch coverage of assessed code.
+- 59 automated tests with 97% statement/branch coverage of assessed code.
 
 ## Demonstration accounts
 
@@ -116,7 +116,7 @@ Run the tests with coverage:
 .\.venv\Scripts\python.exe -m coverage report -m
 ```
 
-The latest verified result is **58 passing tests and 97% coverage**. Tests cover
+The latest verified result is **59 passing tests and 97% coverage**. Tests cover
 authentication, roles, directory search/filter partitions, profile display,
 model rules, validation, staff CRUD, confirmation, ownership attacks, HTTP
 methods and repeatable seed data. See `docs/TEST_SUMMARY.md`.

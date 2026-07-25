@@ -64,12 +64,22 @@ class NonFunctionalRequirementTests(FinderTestCase):
             html=True,
         )
         self.assertContains(login_response, 'class="skip-link"')
+        self.assertContains(login_response, 'aria-describedby="login-help"')
 
         self.login_student()
         directory_response = self.client.get(reverse("finder:staff-directory"))
         self.assertContains(directory_response, 'role="search"')
         self.assertContains(directory_response, 'label for="staff-search"')
         self.assertContains(directory_response, 'label for="interest-filter"')
+        self.assertContains(directory_response, 'aria-current="page"')
+
+    def test_invalid_login_error_is_announced(self):
+        response = self.client.post(
+            reverse("finder:login"),
+            {"username": self.student.email, "password": "incorrect"},
+        )
+        self.assertContains(response, 'id="login-form-error"')
+        self.assertContains(response, 'role="alert"')
 
     def test_invalid_update_preserves_previously_saved_project(self):
         self.login_staff()

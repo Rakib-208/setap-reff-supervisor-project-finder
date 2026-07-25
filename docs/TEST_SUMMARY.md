@@ -4,8 +4,8 @@ Verified on 25 July 2026 with Python 3.12.13, Django 6.0.7 and SQLite.
 
 ## Result
 
-- Tests discovered: 58
-- Tests passed: 58
+- Tests discovered: 59
+- Tests passed: 59
 - Failures/errors: 0
 - Assessed-code coverage: 97%
 - Django system-check issues: 0
