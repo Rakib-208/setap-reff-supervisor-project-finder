@@ -23,6 +23,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'finder',
 ]
 
 MIDDLEWARE = [
@@ -78,6 +79,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTH_USER_MODEL = "finder.User"
 
 LANGUAGE_CODE = "en-gb"
 TIME_ZONE = "Europe/London"
