@@ -4,8 +4,8 @@ Verified on 25 July 2026 with Python 3.12.13, Django 6.0.7 and SQLite.
 
 ## Result
 
-- Tests discovered: 52
-- Tests passed: 52
+- Tests discovered: 58
+- Tests passed: 58
 - Failures/errors: 0
 - Assessed-code coverage: 97%
 - Django system-check issues: 0
@@ -29,6 +29,7 @@ Run the evidence locally:
 | Interest management | Create/update/delete, named confirmation, duplicate/blank/boundary inputs and ownership |
 | Project management | Create/update/delete, confirmation, length partitions, required fields and ownership |
 | Seed command | Exact counts, hashed passwords, correct groups, demo logins, idempotence and unusable extra passwords |
+| Quality controls | Security headers, cookie flags, CSRF rejection, response timing, responsive landmarks and rejected-write integrity |
 
 ## Partition-testing evidence
 
