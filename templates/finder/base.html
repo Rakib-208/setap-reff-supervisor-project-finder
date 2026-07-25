@@ -25,9 +25,11 @@
                 <nav class="primary-nav" aria-label="Primary navigation">
                     {% if current_role == "Student" %}
                         <a class="{% if request.resolver_match.url_name == 'staff-directory' %}is-active{% endif %}"
+                           {% if request.resolver_match.url_name == "staff-directory" %}aria-current="page"{% endif %}
                            href="{% url 'finder:staff-directory' %}">Find a supervisor</a>
                     {% elif current_role == "Staff" %}
                         <a class="{% if request.resolver_match.url_name == 'dashboard' %}is-active{% endif %}"
+                           {% if request.resolver_match.url_name == "dashboard" %}aria-current="page"{% endif %}
                            href="{% url 'finder:dashboard' %}">My dashboard</a>
                     {% endif %}
                 </nav>

@@ -1,5 +1,7 @@
 # ProjectFinder
 
+[![Django verification](https://github.com/Rakib-208/setap-reff-supervisor-project-finder/actions/workflows/ci.yml/badge.svg)](https://github.com/Rakib-208/setap-reff-supervisor-project-finder/actions/workflows/ci.yml)
+
 ProjectFinder is a Django prototype for final-year project discovery. Students
 can search fictional academic profiles, filter by specialist interest and
 review proposed projects. Staff can securely maintain only the interests and
@@ -39,7 +41,7 @@ fictional demonstration data.
 - Atomic create, update and delete operations.
 - Responsive layouts from small mobile to desktop widths.
 - Keyboard focus styles, semantic headings, labels and skip navigation.
-- 52 automated tests with 97% statement/branch coverage of assessed code.
+- 59 automated tests with 97% statement/branch coverage of assessed code.
 
 ## Demonstration accounts
 
@@ -56,6 +58,20 @@ demonstration. Django stores their passwords as salted hashes in SQLite.
 ## Local setup
 
 The project requires Python 3.12 or later.
+
+For a complete automated setup on Windows, run:
+
+```powershell
+.\scripts\setup.ps1
+```
+
+On macOS or Linux, run:
+
+```bash
+./scripts/setup.sh
+```
+
+The equivalent manual commands are shown below for transparency.
 
 ### Windows PowerShell
 
@@ -88,6 +104,10 @@ Run the complete test suite:
 .\.venv\Scripts\python.exe manage.py test
 ```
 
+Alternatively, run `.\scripts\verify.ps1` on Windows or
+`./scripts/verify.sh` on macOS/Linux to perform the Django system check,
+migration-drift check, complete test suite and 95% minimum coverage check.
+
 Run the tests with coverage:
 
 ```powershell
@@ -96,7 +116,7 @@ Run the tests with coverage:
 .\.venv\Scripts\python.exe -m coverage report -m
 ```
 
-The latest verified result is **52 passing tests and 97% coverage**. Tests cover
+The latest verified result is **59 passing tests and 97% coverage**. Tests cover
 authentication, roles, directory search/filter partitions, profile display,
 model rules, validation, staff CRUD, confirmation, ownership attacks, HTTP
 methods and repeatable seed data. See `docs/TEST_SUMMARY.md`.

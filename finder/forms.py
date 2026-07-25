@@ -11,6 +11,7 @@ class EmailAuthenticationForm(AuthenticationForm):
         widget=forms.EmailInput(
             attrs={
                 "autocomplete": "email",
+                "aria-describedby": "login-help",
                 "placeholder": "name@example.test",
             }
         ),
@@ -21,6 +22,7 @@ class EmailAuthenticationForm(AuthenticationForm):
         widget=forms.PasswordInput(
             attrs={
                 "autocomplete": "current-password",
+                "aria-describedby": "login-help",
                 "placeholder": "Enter your password",
             }
         ),
