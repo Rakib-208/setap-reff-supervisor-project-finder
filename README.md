@@ -49,11 +49,18 @@ Run the seed command before using these accounts.
 
 | Role | Email | Password |
 |---|---|---|
-| Student | `student@example.test` | `Student1234.` |
-| Staff | `staff@example.test` | `Staff1234.` |
+| Student - Alex Morgan | `student@example.test` | `AlexStudent1234.` |
+| Student - Jordan Lee | `jordan.lee@example.test` | `JordanStudent1234.` |
+| Student - Taylor Reed | `taylor.reed@example.test` | `TaylorStudent1234.` |
+| Staff - Maya Patel | `staff@example.test` | `MayaStaff1234.` |
+| Staff - Daniel Okoro | `daniel.okoro@example.test` | `DanielStaff1234.` |
+| Staff - Sofia Bennett | `sofia.bennett@example.test` | `SofiaStaff1234.` |
+| Staff - Liam Chen | `liam.chen@example.test` | `LiamStaff1234.` |
+| Staff - Aisha Rahman | `aisha.rahman@example.test` | `AishaStaff1234.` |
 
 These development-only credentials are intentionally published for assessment
-demonstration. Django stores their passwords as salted hashes in SQLite.
+demonstration. Every account has a distinct password, and Django stores those
+passwords as salted hashes in SQLite.
 
 ## Local setup
 

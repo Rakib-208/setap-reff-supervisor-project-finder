@@ -1,6 +1,6 @@
 # Automated test summary
 
-Verified on 25 July 2026 with Python 3.12.13, Django 6.0.7 and SQLite.
+Verified on 26 July 2026 with Python 3.12.13, Django 6.0.7 and SQLite.
 
 ## Result
 
@@ -28,7 +28,7 @@ Run the evidence locally:
 | Profiles | Biography, interests, projects, preserved context, missing records and role enforcement |
 | Interest management | Create/update/delete, named confirmation, duplicate/blank/boundary inputs and ownership |
 | Project management | Create/update/delete, confirmation, length partitions, required fields and ownership |
-| Seed command | Exact counts, hashed passwords, correct groups, demo logins, idempotence and unusable extra passwords |
+| Seed command | Eight accounts, hashed distinct passwords, correct groups, five Staff profiles and idempotence |
 | Quality controls | Security headers, cookie flags, CSRF rejection, response timing, responsive landmarks and rejected-write integrity |
 
 ## Partition-testing evidence

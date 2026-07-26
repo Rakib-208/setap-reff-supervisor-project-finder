@@ -2,6 +2,15 @@
 
 All notable changes to ProjectFinder are documented here.
 
+## Unreleased
+
+### Changed
+
+- Expanded the fictional login dataset to three Students and five Staff users.
+- Assigned a distinct public demonstration password to every seeded account.
+- Grouped all named credentials on the login page and updated setup/demo guidance.
+- Extended seed and login-page tests to cover every demonstration account.
+
 ## 1.0.0 - 2026-07-25
 
 ### Added

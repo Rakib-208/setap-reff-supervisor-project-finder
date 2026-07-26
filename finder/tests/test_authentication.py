@@ -1,17 +1,21 @@
 from django.contrib.auth.models import Group
 from django.urls import reverse
 
+from finder.demo_accounts import STAFF_ACCOUNTS, STUDENT_ACCOUNTS
 from finder.models import User
 
 from .base import FinderTestCase
 
 
 class AuthenticationTests(FinderTestCase):
-    def test_login_page_displays_both_demo_accounts(self):
+    def test_login_page_displays_every_demo_account(self):
         response = self.client.get(reverse("finder:login"))
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "student@example.test")
-        self.assertContains(response, "staff@example.test")
+        for account in (*STUDENT_ACCOUNTS, *STAFF_ACCOUNTS):
+            with self.subTest(email=account["email"]):
+                self.assertContains(response, account["first_name"])
+                self.assertContains(response, account["email"])
+                self.assertContains(response, account["password"])
 
     def test_valid_student_login_redirects_to_directory(self):
         response = self.client.post(

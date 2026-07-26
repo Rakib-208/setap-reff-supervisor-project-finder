@@ -11,6 +11,7 @@ from django.urls import reverse
 from django.views.decorators.http import require_http_methods
 
 from .access import STAFF_ROLE, STUDENT_ROLE, has_role, role_for, role_required
+from .demo_accounts import STAFF_ACCOUNTS, STUDENT_ACCOUNTS
 from .forms import EmailAuthenticationForm, InterestForm, ProjectIdeaForm
 from .models import Interest, ProjectIdea, StaffProfile
 
@@ -53,7 +54,15 @@ def login_view(request):
             messages.success(request, f"Welcome back, {user.display_name}.")
             return redirect(destination)
 
-    return render(request, "finder/login.html", {"form": form})
+    return render(
+        request,
+        "finder/login.html",
+        {
+            "form": form,
+            "student_demo_accounts": STUDENT_ACCOUNTS,
+            "staff_demo_accounts": STAFF_ACCOUNTS,
+        },
+    )
 
 
 def logout_view(request):

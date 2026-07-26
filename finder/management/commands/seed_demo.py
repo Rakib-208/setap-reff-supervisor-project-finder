@@ -2,6 +2,7 @@ from django.contrib.auth.models import Group
 from django.core.management.base import BaseCommand
 from django.db import transaction
 
+from finder.demo_accounts import STAFF_ACCOUNTS, STUDENT_ACCOUNTS
 from finder.models import Interest, ProjectIdea, StaffProfile, User
 
 
@@ -129,19 +130,23 @@ class Command(BaseCommand):
         student_group, _ = Group.objects.get_or_create(name="Student")
         staff_group, _ = Group.objects.get_or_create(name="Staff")
 
-        student, _ = User.objects.update_or_create(
-            email="student@example.test",
-            defaults={
-                "first_name": "Alex",
-                "last_name": "Morgan",
-                "is_active": True,
-            },
-        )
-        student.set_password("Student1234.")
-        student.save(update_fields=["password"])
-        student.groups.set([student_group])
+        for record in STUDENT_ACCOUNTS:
+            student, _ = User.objects.update_or_create(
+                email=record["email"],
+                defaults={
+                    "first_name": record["first_name"],
+                    "last_name": record["last_name"],
+                    "is_active": True,
+                },
+            )
+            student.set_password(record["password"])
+            student.save(update_fields=["password"])
+            student.groups.set([student_group])
 
-        for index, record in enumerate(STAFF_RECORDS):
+        staff_passwords = {
+            account["email"]: account["password"] for account in STAFF_ACCOUNTS
+        }
+        for record in STAFF_RECORDS:
             user, _ = User.objects.update_or_create(
                 email=record["email"],
                 defaults={
@@ -150,10 +155,7 @@ class Command(BaseCommand):
                     "is_active": True,
                 },
             )
-            if index == 0:
-                user.set_password("Staff1234.")
-            else:
-                user.set_unusable_password()
+            user.set_password(staff_passwords[record["email"]])
             user.save(update_fields=["password"])
             user.groups.set([staff_group])
 
@@ -182,7 +184,7 @@ class Command(BaseCommand):
 
         self.stdout.write(
             self.style.SUCCESS(
-                "Created fictional demo data: 1 student, 5 staff profiles, "
+                "Created fictional demo data: 3 students, 5 staff profiles, "
                 "15 interests and 10 project ideas."
             )
         )

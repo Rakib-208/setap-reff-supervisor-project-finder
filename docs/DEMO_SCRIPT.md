@@ -19,7 +19,7 @@ Show the login page and point out the clearly published demonstration accounts.
 
 ## 0:30-1:35 - Student discovery
 
-1. Sign in with `student@example.test` and `Student1234.`.
+1. Sign in as Alex Morgan with `student@example.test` and `AlexStudent1234.`.
 2. Show the complete directory and responsive staff cards.
 3. Search for `Maya` to demonstrate case-insensitive partial-name matching.
 4. Clear the search, then filter by `Graph theory`.
@@ -29,7 +29,7 @@ Show the login page and point out the clearly published demonstration accounts.
 
 ## 1:35-3:20 - Staff content management
 
-1. Sign out and sign in with `staff@example.test` and `Staff1234.`.
+1. Sign out and sign in as Maya Patel with `staff@example.test` and `MayaStaff1234.`.
 2. Show the owner-specific dashboard and content totals.
 3. Add the interest `Information visualisation`.
 4. Edit it to `Data visualisation`.

@@ -66,15 +66,30 @@
 
             <div class="demo-accounts">
                 <h3>Demonstration accounts</h3>
-                <div class="demo-account">
-                    <span class="demo-role">Student</span>
-                    <code>student@example.test</code>
-                    <code>Student1234.</code>
+                <p class="demo-instruction">Choose any named account. Each email and password pair is unique.</p>
+                <div class="demo-account-group">
+                    <h4>Students</h4>
+                    <ul class="demo-account-list">
+                        {% for account in student_demo_accounts %}
+                            <li class="demo-account">
+                                <span class="demo-person">{{ account.first_name }} {{ account.last_name }}</span>
+                                <code><span>Email: </span>{{ account.email }}</code>
+                                <code><span>Password: </span>{{ account.password }}</code>
+                            </li>
+                        {% endfor %}
+                    </ul>
                 </div>
-                <div class="demo-account">
-                    <span class="demo-role">Staff</span>
-                    <code>staff@example.test</code>
-                    <code>Staff1234.</code>
+                <div class="demo-account-group">
+                    <h4>Staff</h4>
+                    <ul class="demo-account-list">
+                        {% for account in staff_demo_accounts %}
+                            <li class="demo-account">
+                                <span class="demo-person">{{ account.first_name }} {{ account.last_name }}</span>
+                                <code><span>Email: </span>{{ account.email }}</code>
+                                <code><span>Password: </span>{{ account.password }}</code>
+                            </li>
+                        {% endfor %}
+                    </ul>
                 </div>
             </div>
         </div>
